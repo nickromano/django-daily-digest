@@ -68,9 +68,11 @@ setup(
         'Django>=1.8',
         'CairoSVG>=2.1.2',
     ],
-    dependency_links=[
-        'git+ssh://git@github.com/nickromano/leather.git#egg=leather-0.3.3',
-    ],
+    # Dependency links are no longer supported by pip so the leather code has been copied to this repo
+    # until this PR is merged: https://github.com/wireservice/leather/pull/89.
+    # dependency_links=[
+    #     'git+ssh://git@github.com/nickromano/leather.git#egg=leather-0.3.3',
+    # ],
     classifiers=[
         'Framework :: Django',
         'Intended Audience :: Developers',
