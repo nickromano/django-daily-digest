@@ -1,0 +1,20 @@
+{% extends 'daily_digest/base.html' %}
+
+{% block body %}
+
+{% for chart in charts %}
+<h3 style="
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin-bottom: 0;
+    ">{{ chart.title }}</h3>
+
+{% if chart.svg_data %}
+	{{ chart.svg_data|safe }}
+{% else %}
+	<img style="max-width: 480px;" width="100%" src="cid:{{ chart.slug }}"/>
+{% endif %}
+<br />
+{% endfor %}
+
+{% endblock %}

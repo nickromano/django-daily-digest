@@ -1,0 +1,11 @@
+*.pyc
+__pycache__/
+
+.subl/
+
+test
+db
+
+/dist
+/daily_digest.egg-info
+/.eggs
