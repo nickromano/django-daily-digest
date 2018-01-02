@@ -2,6 +2,13 @@
 
 Simple daily summary email with charts.
 
+## Usage
+
+Set a scheduled job to run this once a day.
+```
+python manage.py send_daily_digest
+```
+
 ## Contributing
 
 ### Local setup
