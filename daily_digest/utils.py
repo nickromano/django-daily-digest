@@ -40,7 +40,7 @@ def series_labels(series_1_count, series_2_count):
     return current_label, prev_period_label
 
 
-def series_data_for_model(start_query, field, prev_period=False, exclude_today=False):
+def series_data_for_model(queryset, field, prev_period=False, exclude_today=False):
     start_of_today = datetime.utcnow().replace(hour=0, minute=0, second=0).replace(tzinfo=los_angeles_timezone)
     start_of_today = start_of_today.astimezone(pytz.UTC)
 
@@ -58,7 +58,7 @@ def series_data_for_model(start_query, field, prev_period=False, exclude_today=F
         '{}__gte'.format(field): period_start,
         '{}__lt'.format(field): period_end
     }
-    series_data = start_query.filter(**filters).order_by(field).values_list(
+    series_data = queryset.filter(**filters).values_list(
         field, flat=True
     )
     series_data = list(map(
@@ -80,11 +80,11 @@ def series_data_for_model(start_query, field, prev_period=False, exclude_today=F
     return grouped_by_date, len(series_data)
 
 
-def svg_data_for_query(start_query, field, chart_name, exclude_today=False):
+def svg_data_for_query(queryset, field, chart_name, exclude_today=False):
     data, total_count = series_data_for_model(
-        start_query, field, exclude_today=exclude_today)
+        queryset, field, exclude_today=exclude_today)
     data_prev_period, total_count_prev_period = series_data_for_model(
-        start_query, field, prev_period=True, exclude_today=exclude_today)
+        queryset, field, prev_period=True, exclude_today=exclude_today)
 
     # Show every date on the x axis
     x_axis_ticks = []
@@ -117,6 +117,8 @@ def charts_data_for_config(chart_format='svg'):
         content_type = ContentType.objects.get(app_label=app_label, model=model)
         filter_kwargs = chart.get('filter_kwargs', {})
         queryset = content_type.model_class().objects.filter(**filter_kwargs)
+        if chart.get('unique_by'):
+            queryset = queryset.distinct(chart['unique_by']).order_by(chart['unique_by'])
         result = {
             'title': title,
             'svg_data': svg_data_for_query(
