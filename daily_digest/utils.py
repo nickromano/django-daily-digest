@@ -41,7 +41,8 @@ def series_labels(series_1_count, series_2_count):
 
 
 def series_data_for_model(start_query, field, prev_period=False):
-    start_of_today = datetime.now().replace(hour=0, minute=0, second=0).replace(tzinfo=los_angeles_timezone)
+    start_of_today = datetime.utcnow().replace(hour=0, minute=0, second=0).replace(tzinfo=los_angeles_timezone)
+    start_of_today = start_of_today.astimezone(pytz.UTC)
     if prev_period:
         period_start = start_of_today - timedelta(days=EMAIL_TIME_PERIOD * 2)
         period_end = start_of_today - timedelta(days=EMAIL_TIME_PERIOD)
@@ -63,7 +64,7 @@ def series_data_for_model(start_query, field, prev_period=False):
 
     grouped_by_date = []
     for i in range(0, EMAIL_TIME_PERIOD):
-        day = (period_start + timedelta(days=i)).date()
+        day = (period_start + timedelta(days=i + 1)).date()
         count = 0
         for user_date in series_data:
             if user_date == day:
