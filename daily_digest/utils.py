@@ -40,15 +40,19 @@ def series_labels(series_1_count, series_2_count):
     return current_label, prev_period_label
 
 
-def series_data_for_model(start_query, field, prev_period=False):
+def series_data_for_model(start_query, field, prev_period=False, exclude_today=False):
     start_of_today = datetime.utcnow().replace(hour=0, minute=0, second=0).replace(tzinfo=los_angeles_timezone)
     start_of_today = start_of_today.astimezone(pytz.UTC)
+
+    if exclude_today:
+        start_of_today = start_of_today - timedelta(days=1)
+
     if prev_period:
-        period_start = start_of_today - timedelta(days=EMAIL_TIME_PERIOD * 2)
         period_end = start_of_today - timedelta(days=EMAIL_TIME_PERIOD)
+        period_start = period_end - timedelta(days=EMAIL_TIME_PERIOD)
     else:
-        period_start = start_of_today - timedelta(days=EMAIL_TIME_PERIOD)
         period_end = start_of_today + timedelta(days=1)  # End of today
+        period_start = period_end - timedelta(days=EMAIL_TIME_PERIOD + 1)
 
     filters = {
         '{}__gte'.format(field): period_start,
@@ -63,8 +67,8 @@ def series_data_for_model(start_query, field, prev_period=False):
     ))
 
     grouped_by_date = []
-    for i in range(0, EMAIL_TIME_PERIOD):
-        day = (period_start + timedelta(days=i + 1)).date()
+    for i in range(1, EMAIL_TIME_PERIOD + 1):
+        day = (period_start + timedelta(days=i)).date()
         count = 0
         for user_date in series_data:
             if user_date == day:
@@ -76,11 +80,11 @@ def series_data_for_model(start_query, field, prev_period=False):
     return grouped_by_date, len(series_data)
 
 
-def svg_data_for_query(start_query, field, chart_name):
+def svg_data_for_query(start_query, field, chart_name, exclude_today=False):
     data, total_count = series_data_for_model(
-        start_query, field)
+        start_query, field, exclude_today=exclude_today)
     data_prev_period, total_count_prev_period = series_data_for_model(
-        start_query, field, prev_period=True)
+        start_query, field, prev_period=True, exclude_today=exclude_today)
 
     # Show every date on the x axis
     x_axis_ticks = []
@@ -111,12 +115,14 @@ def charts_data_for_config(chart_format='svg'):
         model = chart['model']
         date_field = chart['date_field']
         content_type = ContentType.objects.get(app_label=app_label, model=model)
-        # , date_field=date_field
         filter_kwargs = chart.get('filter_kwargs', {})
         queryset = content_type.model_class().objects.filter(**filter_kwargs)
         result = {
             'title': title,
-            'svg_data': svg_data_for_query(queryset, date_field, slugify(title))
+            'svg_data': svg_data_for_query(
+                queryset, date_field, slugify(title),
+                exclude_today=config.get('exclude_today', False)
+            )
         }
         if chart_format == 'png':
             del result['svg_data']

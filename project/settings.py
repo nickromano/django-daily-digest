@@ -68,6 +68,7 @@ STATIC_URL = '/static/'
 DAILY_DIGEST_CONFIG = {
     'title': 'Daily Digest',
     'from_email': 'support@test.com',
+    'exclude_today': False,
     'charts': [
         {
             'title': 'New Users',
