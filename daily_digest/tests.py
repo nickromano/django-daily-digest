@@ -1,14 +1,17 @@
-import pytz
 import random
-from datetime import datetime, timedelta, date
-from django.contrib.auth.models import User
-from project.photos.models import PhotoUpload
+from datetime import date, datetime, timedelta
 
 import mock
+import pytz
+from django.contrib.auth.models import User
+from django.core.management import call_command
 from django.test import TestCase
 from django.test.client import Client
+from project.photos.models import PhotoUpload
 
-from .utils import EmailMultiAlternatives, send_daily_digest, series_data_for_model
+from .utils import (
+    EmailMultiAlternatives, send_daily_digest, series_data_for_model
+)
 
 
 class MockEmailMultiAlternatives(mock.Mock):
@@ -41,6 +44,12 @@ class DailyDigestTestCase(TestCase):
             mock.call('<!DOCTYPE html>\n<html>\n<head>\n\t<title></title>\n\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n\n\t</head>\n<body style="font-family:-apple-system, BlinkMacSystemFont, sans-serif">\n\t\n\n\n<h3 style="font-weight:500; margin-bottom:0">New Users</h3>\n\n\n\t<img class="chart" width="100%" src="cid:new-users" style="max-width:480px">\n\n<br>\n\n<h3 style="font-weight:500; margin-bottom:0">Photo Uploads</h3>\n\n\n\t<img class="chart" width="100%" src="cid:photo-uploads" style="max-width:480px">\n\n<br>\n\n\n\n</body>\n</html>\n', 'text/html')
         )
         self.assertEqual(mock_add_attachment.call_args_list[0][0][0].get('Content-ID'), '<new-users>')
+
+    @mock.patch('daily_digest.management.commands.send_daily_digest.send_daily_digest')
+    def test_send_daily_digest_command(self, mock_send_digest):
+        call_command('send_daily_digest')
+
+        self.assertEqual(mock_send_digest.called, True)
 
     def test_daily_digest_preview(self):
         user = User.objects.create(username='test', is_superuser=True, is_staff=True)
