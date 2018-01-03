@@ -1,7 +1,7 @@
 # Django Daily Digest
 
-[![Build Status](https://travis-ci.org/nickromano/daily-digest.svg?branch=master)](https://travis-ci.org/nickromano/daily-digest)
-[![Coverage Status](https://coveralls.io/repos/github/nickromano/daily-digest/badge.svg?branch=master)](https://coveralls.io/github/nickromano/daily-digest?branch=master)
+[![Build Status](https://travis-ci.org/nickromano/django-daily-digest.svg?branch=master)](https://travis-ci.org/nickromano/django-daily-digest)
+[![Coverage Status](https://coveralls.io/repos/github/nickromano/django-daily-digest/badge.svg?branch=master)](https://coveralls.io/github/nickromano/django-daily-digest?branch=master)
 [![PyPi](https://img.shields.io/pypi/v/daily-digest.svg)](https://pypi.python.org/pypi/daily-digest)
 ![PyPI](https://img.shields.io/pypi/pyversions/daily-digest.svg)
 ![PyPI](https://img.shields.io/pypi/l/daily-digest.svg)
