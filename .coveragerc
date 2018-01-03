@@ -1,0 +1,6 @@
+[run]
+source = .
+include =
+	daily_digest/*
+omit =
+	.eggs/*

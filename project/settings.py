@@ -19,7 +19,7 @@ USE_TZ = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test' if UNIT_TESTING else 'db'
+        'NAME': 'db.sqlite3' if UNIT_TESTING else 'db.sqlite3'
     }
 }
 
@@ -32,6 +32,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MIDDLEWARE_CLASSES = MIDDLEWARE  # Django 1.8 support
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
+
+    # Used for examples
+    'project.photos',
 
     'daily_digest'
 ]
@@ -68,6 +72,7 @@ STATIC_URL = '/static/'
 DAILY_DIGEST_CONFIG = {
     'title': 'Daily Digest',
     'from_email': 'support@test.com',
+    'timezone': 'America/Los_Angeles',
     'exclude_today': False,
     'charts': [
         {
@@ -78,6 +83,12 @@ DAILY_DIGEST_CONFIG = {
             'filter_kwargs': {
                 'is_active': True
             }
-        }
+        },
+        {
+            'title': 'Photo Uploads',
+            'app_label': 'photos',
+            'model': 'photoupload',
+            'date_field': 'created'
+        },
     ]
 }

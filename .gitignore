@@ -3,9 +3,9 @@ __pycache__/
 
 .subl/
 
-test
-db
+*.sqlite3
 
 /dist
 /daily_digest.egg-info
 /.eggs
+/.coverage
