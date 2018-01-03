@@ -10,9 +10,23 @@ Simple daily summary email with charts. Built using the awesome charting library
 
 <img src="docs/example.png" width="480" alt="Email Example">
 
-## Configuration
+## Setup
 
-Add the following configuration to your `settings.py` file.
+1) Install the package
+
+```
+pip install daily_digest
+```
+
+2) Add it to installed apps in `settings.py`
+
+```
+INSTALLED_APPS = [
+    'daily_digest',
+]
+```
+
+3) Add the following configuration to your `settings.py` file.
 ```py
 DAILY_DIGEST_CONFIG = {
     'title': 'Daily Digest',
