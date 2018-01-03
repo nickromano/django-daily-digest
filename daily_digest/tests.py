@@ -62,6 +62,17 @@ class DailyDigestTestCase(TestCase):
         response = client.get('/admin/daily-digest-preview/')
         self.assertEqual(response.status_code, 200)
 
+    def test_daily_digest_preview_requires_staff(self):
+        user = User.objects.create(username='test')
+        user.set_password('test')
+        user.save()
+
+        client = Client()
+        client.login(username='test', password='test')
+
+        response = client.get('/admin/daily-digest-preview/')
+        self.assertEqual(response.status_code, 302)
+
     @mock.patch('daily_digest.utils.current_time_naive', return_value=datetime(2018, 1, 10, 16, 0))  # 8am LA
     def test_series_data_generated_for_current_period(self, *_):
         timezone = pytz.timezone('America/Los_Angeles')
