@@ -9,3 +9,4 @@ __pycache__/
 /daily_digest.egg-info
 /.eggs
 /.coverage
+/build

@@ -39,7 +39,7 @@ def series_labels(series_1_count, series_2_count):
 
     current_label = 'Last {} Days ({}) {}'.format(EMAIL_TIME_PERIOD, series_1_count, percent_change)
     prev_period_label = 'Previous Period ({})'.format(series_2_count)
-    return current_label, prev_period_label
+    return current_label.strip(), prev_period_label.strip()
 
 
 def series_data_for_model(queryset, field, timezone, prev_period=False, exclude_today=False):

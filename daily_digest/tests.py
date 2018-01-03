@@ -10,7 +10,8 @@ from django.test.client import Client
 from project.photos.models import PhotoUpload
 
 from .utils import (
-    EmailMultiAlternatives, send_daily_digest, series_data_for_model
+    EmailMultiAlternatives, send_daily_digest, series_data_for_model,
+    series_labels
 )
 
 
@@ -124,3 +125,13 @@ class DailyDigestTestCase(TestCase):
             [date(2018, 1, 7), 10], [date(2018, 1, 8), 9], [date(2018, 1, 9), 8],
             [date(2018, 1, 10), 7]
         ])
+
+    def test_series_labels(self):
+        current_label, prev_period_label = series_labels(55, 100)
+        self.assertEqual(current_label, 'Last 7 Days (55) -45%')
+        self.assertEqual(prev_period_label, 'Previous Period (100)')
+
+    def test_series_labels_with_no_prev_period_data(self):
+        current_label, prev_period_label = series_labels(55, 0)
+        self.assertEqual(current_label, 'Last 7 Days (55)')
+        self.assertEqual(prev_period_label, 'Previous Period (0)')
