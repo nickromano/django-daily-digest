@@ -77,8 +77,7 @@ DAILY_DIGEST_CONFIG = {
     'charts': [
         {
             'title': 'New Users',
-            'app_label': 'auth',
-            'model': 'user',
+            'model': 'django.contrib.auth.models.User',
             'date_field': 'date_joined',
             'filter_kwargs': {
                 'is_active': True
@@ -86,9 +85,8 @@ DAILY_DIGEST_CONFIG = {
         },
         {
             'title': 'Photo Uploads',
-            'app_label': 'photos',
-            'model': 'photoupload',
+            'model': 'project.photos.models.PhotoUpload',
             'date_field': 'created'
-        },
+        }
     ]
 }

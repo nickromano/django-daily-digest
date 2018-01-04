@@ -30,14 +30,13 @@ INSTALLED_APPS = [
 ```py
 DAILY_DIGEST_CONFIG = {
     'title': 'Daily Digest',
-    'from_email': 'support@test.com',
+    'from_email': 'support@test.com',  # defaults as settings.DEFAULT_FROM_EMAIL
     'timezone': 'America/Los_Angeles',  # timezone for chart data (default UTC)
     'exclude_today': False,  # include the current day the email is sent in the chart (default False)
     'charts': [
         {
             'title': 'New Users',
-            'app_label': 'auth',
-            'model': 'user',  # app_label and model can be found in the django_content_type table
+            'model': 'django.contrib.auth.models.User',
             'date_field': 'date_joined',  # used to count per day
             'filter_kwargs': {
                 'is_active': True
@@ -45,8 +44,7 @@ DAILY_DIGEST_CONFIG = {
         },
         {
             'title': 'Photo Uploads',
-            'app_label': 'photos',
-            'model': 'photoupload',
+            'model': 'project.photos.models.PhotoUpload',
             'date_field': 'created'
         },
     ]

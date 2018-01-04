@@ -9,6 +9,9 @@ from django.test import TestCase
 from django.test.client import Client
 from project.photos.models import PhotoUpload
 
+from .config import (
+    DailyDigestRequiredFieldException, daily_digest_config, load_config
+)
 from .utils import (
     EmailMultiAlternatives, send_daily_digest, series_data_for_model,
     series_labels
@@ -135,3 +138,40 @@ class DailyDigestTestCase(TestCase):
         current_label, prev_period_label = series_labels(55, 0)
         self.assertEqual(current_label, 'Last 7 Days (55)')
         self.assertEqual(prev_period_label, 'Previous Period (0)')
+
+    def test_config_missing_required_field(self):
+        config_missing_fields = {
+            'charts': [{
+                # 'title': 'New Users'  Missing field
+                'model': 'django.contrib.auth.models.User',
+                'date_field': 'date_joined'
+            }]
+        }
+        with self.settings(DAILY_DIGEST_CONFIG=config_missing_fields):
+            with self.assertRaises(DailyDigestRequiredFieldException):
+                load_config()
+
+    def test_config_passing_model_path(self):
+        config_missing_fields = {
+            'charts': [{
+                'title': 'New Users',
+                'model': 'django.contrib.auth.models.User',
+                'date_field': 'date_joined'
+            }]
+        }
+        with self.settings(DAILY_DIGEST_CONFIG=config_missing_fields):
+            load_config()
+            self.assertEqual(daily_digest_config.chart_configs[0].model, User)
+
+    def test_config_passing_app_label(self):
+        config_missing_fields = {
+            'charts': [{
+                'title': 'New Users',
+                'app_label': 'auth',
+                'model': 'user',
+                'date_field': 'date_joined'
+            }]
+        }
+        with self.settings(DAILY_DIGEST_CONFIG=config_missing_fields):
+            load_config()
+            self.assertEqual(daily_digest_config.chart_configs[0].model, User)

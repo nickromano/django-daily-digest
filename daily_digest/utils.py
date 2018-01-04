@@ -5,7 +5,6 @@ import leather
 import pytz
 from cairosvg import svg2png
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from email.mime.image import MIMEImage
@@ -119,12 +118,9 @@ def charts_data_for_config(chart_format='svg'):
     charts_data = []
     for chart_config in daily_digest_config.chart_configs:
         title = chart_config.title
-        app_label = chart_config.app_label
-        model = chart_config.model
         date_field = chart_config.date_field
-        content_type = ContentType.objects.get(app_label=app_label, model=model)
         filter_kwargs = chart_config.filter_kwargs
-        queryset = content_type.model_class().objects.filter(**filter_kwargs)
+        queryset = chart_config.model.objects.filter(**filter_kwargs)
         if chart_config.distinct_by:
             queryset = queryset.distinct(
                 chart_config.distinct_by
