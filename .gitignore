@@ -10,3 +10,4 @@ __pycache__/
 /.eggs
 /.coverage
 /build
+.DS_Store
