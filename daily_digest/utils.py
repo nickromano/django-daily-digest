@@ -158,7 +158,7 @@ def send_daily_digest():
     # Inline all css
     html_content = transform(html_content)
 
-    msg = EmailMultiAlternatives(subject, text_content, daily_digest_config.from_email, settings.ADMINS)
+    msg = EmailMultiAlternatives(subject, text_content, daily_digest_config.from_email, daily_digest_config.to)
     msg.attach_alternative(html_content, "text/html")
 
     for chart_config in daily_digest_config.chart_configs:

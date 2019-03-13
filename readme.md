@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 DAILY_DIGEST_CONFIG = {
     'title': 'Daily Digest',
     'from_email': 'support@test.com',  # defaults as settings.DEFAULT_FROM_EMAIL
+    'to': ['test@test.com'],
     'timezone': 'America/Los_Angeles',  # timezone for chart data (default UTC)
     'exclude_today': False,  # include the current day the email is sent in the chart (default False)
     'charts': [
@@ -53,7 +54,7 @@ DAILY_DIGEST_CONFIG = {
 
 ## Usage
 
-Set a scheduled job to run this once a day.  The email will be sent to all addresses in `settings.ADMINS`.
+Set a scheduled job to run this once a day.  The email will be sent to all addresses in `DAILY_DIGEST_CONFIG['to']`.
 ```
 python manage.py send_daily_digest
 ```

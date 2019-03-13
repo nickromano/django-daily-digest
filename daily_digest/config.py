@@ -22,6 +22,11 @@ def import_class_at_path(path):
     return parser_class
 
 
+DailyDigestConfig = namedtuple('DailyDigestConfig', [
+    'title', 'from_email', 'to', 'timezone', 'exclude_today', 'chart_configs'
+])
+
+
 def load_config():
     global daily_digest_config
 
@@ -51,10 +56,10 @@ def load_config():
         )
         _chart_configs.append(chart_config)
 
-    DailyDigestConfig = namedtuple('DailyDigestConfig', ['title', 'from_email', 'timezone', 'exclude_today', 'chart_configs'])
     daily_digest_config = DailyDigestConfig(
         title=_config.get('title', 'Daily Digest'),
         from_email=_config.get('from_email', settings.DEFAULT_FROM_EMAIL),
+        to=_config.get('to', settings.ADMINS),
         timezone=pytz.timezone(_config['timezone']) if _config.get('timezone') else pytz.UTC,
         exclude_today=_config.get('exclude_today', False),
         chart_configs=_chart_configs
