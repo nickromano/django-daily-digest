@@ -1,5 +1,5 @@
 Django==2.1.7
 -e git+https://github.com/nickromano/leather.git#egg=leather
-CairoSVG==2.3.0
+CairoSVG==2.5.1
 mock==2.0.0
 premailer==3.4.0
