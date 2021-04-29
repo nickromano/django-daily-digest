@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "09:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: cairosvg
+    versions:
+    - 2.5.1
+  - dependency-name: premailer
+    versions:
+    - 3.7.0
