@@ -12,6 +12,7 @@ class LeatherTestCase(unittest.TestCase):
     """
     Unittest case for quickly asserting logic about charts.
     """
+
     def render_chart(self, chart):
         """
         Verify the column names in the given table match what is expected.
@@ -23,10 +24,10 @@ class LeatherTestCase(unittest.TestCase):
     def parse_svg(self, text):
         from lxml import etree
 
-        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
+        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', "")
 
         if six.PY3:
-            text = text.encode('utf-8')
+            text = text.encode("utf-8")
 
         return etree.fromstring(text)
 
@@ -35,5 +36,5 @@ class LeatherTestCase(unittest.TestCase):
         self.assertEqual(len(series), count)
 
     def assertTickLabels(self, svg, orient, compare):
-        ticks = [t.text for t in svg.cssselect('.%s .tick text' % orient)]
+        ticks = [t.text for t in svg.cssselect(".%s .tick text" % orient)]
         self.assertSequenceEqual(ticks, compare)

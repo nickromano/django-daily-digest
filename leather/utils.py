@@ -17,8 +17,8 @@ except (NameError, ImportError):
 
 
 # Shorthand
-ZERO = Decimal('0')
-NINE_PLACES = Decimal('1e-9')
+ZERO = Decimal("0")
+NINE_PLACES = Decimal("1e-9")
 
 #: X data dimension index
 X = 0
@@ -30,31 +30,35 @@ Y = 1
 Z = 2
 
 
-DIMENSION_NAMES = ['X', 'Y', 'Z']
+DIMENSION_NAMES = ["X", "Y", "Z"]
 
 #: Data structure for representing margins or other CSS-edge like properties
-Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
+Box = namedtuple("Box", ["top", "right", "bottom", "left"])
 
 #: Data structure for a single series data point
-Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
+Datum = namedtuple("Datum", ["i", "x", "y", "z", "row"])
 
 #: Dummy object used in place of a series when rendering legends for categories
-DummySeries = namedtuple('DummySeries', ['name'])
+DummySeries = namedtuple("DummySeries", ["name"])
 
 
 formatwarning_orig = warnings.formatwarning
-warnings.formatwarning = lambda message, category, filename, lineno, line=None: \
-    formatwarning_orig(message, category, filename, lineno, line='')
+warnings.formatwarning = (
+    lambda message, category, filename, lineno, line=None: formatwarning_orig(
+        message, category, filename, lineno, line=""
+    )
+)
 
 warn = warnings.warn
 warnings.resetwarnings()
-warnings.simplefilter('always')
+warnings.simplefilter("always")
 
 
 # In Python 3.5 use builtin C implementation of `isclose`
 if sys.version_info >= (3, 5):
     from math import isclose
 else:
+
     def isclose(a, b, rel_tol=NINE_PLACES, abs_tol=ZERO):
         """
         Test if two floating points numbers are close enough to be considered
@@ -78,16 +82,16 @@ else:
             return True
 
         if rel_tol < ZERO or abs_tol < ZERO:
-            raise ValueError('Tolerances must be non-negative')
+            raise ValueError("Tolerances must be non-negative")
 
         if math.isinf(abs(a)) or math.isinf(abs(b)):
             return False
 
         diff = abs(b - a)
 
-        return (((diff <= abs(rel_tol * b)) or
-                (diff <= abs(rel_tol * a))) or
-                (diff <= abs_tol))
+        return ((diff <= abs(rel_tol * b)) or (diff <= abs(rel_tol * a))) or (
+            diff <= abs_tol
+        )
 
 
 def to_year_count(d):

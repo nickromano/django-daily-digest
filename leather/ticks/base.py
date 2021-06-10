@@ -5,6 +5,7 @@ class Ticker(object):
     """
     Base class for ticker implementations.
     """
+
     @property
     def ticks(self):
         raise NotImplementedError

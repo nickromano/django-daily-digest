@@ -10,6 +10,7 @@ class Shape(object):
     """
     Base class for shapes that can be used to render data :class:`.Series`.
     """
+
     def validate_series(self, series):
         """
         Verify this shape can be used to render a given series.
@@ -26,11 +27,11 @@ class Shape(object):
         """
         Render the legend entries for these shapes.
         """
-        if hasattr(self, '_fill_color'):
+        if hasattr(self, "_fill_color"):
             if self._fill_color:
                 if callable(self._fill_color):
                     # TODO
-                    fill_color = 'black'
+                    fill_color = "black"
                 else:
                     fill_color = self._fill_color
             else:
@@ -38,11 +39,11 @@ class Shape(object):
         else:
             fill_color = None
 
-        if hasattr(self, '_stroke_color'):
+        if hasattr(self, "_stroke_color"):
             if self._stroke_color:
                 if callable(self._stroke_color):
                     # TODO
-                    stroke_color = 'black'
+                    stroke_color = "black"
                 else:
                     stroke_color = self._stroke_color
             else:
@@ -52,37 +53,43 @@ class Shape(object):
 
         bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
 
-        text = six.text_type(series.name) if series.name is not None else 'Unnamed series'
+        text = (
+            six.text_type(series.name) if series.name is not None else "Unnamed series"
+        )
         text_width = (len(text) + 4) * theme.legend_font_char_width
 
         item_width = text_width + bubble_width
 
         # Group
-        item_group = ET.Element('g')
+        item_group = ET.Element("g")
 
         # Bubble
-        bubble = ET.Element('rect',
+        bubble = ET.Element(
+            "rect",
             x=six.text_type(0),
-            y=six.text_type(-theme.legend_font_char_height + theme.legend_bubble_offset),
+            y=six.text_type(
+                -theme.legend_font_char_height + theme.legend_bubble_offset
+            ),
             width=six.text_type(theme.legend_bubble_size),
-            height=six.text_type(theme.legend_bubble_size)
+            height=six.text_type(theme.legend_bubble_size),
         )
 
         if fill_color:
-            bubble.set('fill', fill_color)
+            bubble.set("fill", fill_color)
         elif stroke_color:
-            bubble.set('fill', stroke_color)
+            bubble.set("fill", stroke_color)
 
         item_group.append(bubble)
 
         # Label
-        label = ET.Element('text',
+        label = ET.Element(
+            "text",
             x=six.text_type(bubble_width),
             y=six.text_type(0),
-            fill=theme.legend_color
+            fill=theme.legend_color,
         )
-        label.set('font-family', theme.legend_font_family)
-        label.set('font-size', six.text_type(theme.legend_font_size))
+        label.set("font-family", theme.legend_font_family)
+        label.set("font-size", six.text_type(theme.legend_font_size))
         label.text = text
 
         item_group.append(label)

@@ -12,6 +12,7 @@ class Scale(object):
     """
     Base class for various kinds of scale objects.
     """
+
     @classmethod
     def infer(cls, layers, dimension, data_type):
         """

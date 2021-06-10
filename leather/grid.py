@@ -16,6 +16,7 @@ class Grid(object):
     A container for a set of :class:`.Chart` instances that are rendered in a
     grid layout.
     """
+
     def __init__(self):
         self._charts = []
 
@@ -50,28 +51,32 @@ class Grid(object):
             width = columns * theme.default_chart_width
             height = rows * theme.default_chart_height
 
-        root = ET.Element('svg',
+        root = ET.Element(
+            "svg",
             width=six.text_type(width),
             height=six.text_type(height),
-            version='1.1',
-            xmlns='http://www.w3.org/2000/svg'
+            version="1.1",
+            xmlns="http://www.w3.org/2000/svg",
         )
 
         # Root /  background
-        root_group = ET.Element('g')
+        root_group = ET.Element("g")
 
-        root_group.append(ET.Element('rect',
-            x=six.text_type(0),
-            y=six.text_type(0),
-            width=six.text_type(width),
-            height=six.text_type(height),
-            fill=theme.background_color
-        ))
+        root_group.append(
+            ET.Element(
+                "rect",
+                x=six.text_type(0),
+                y=six.text_type(0),
+                width=six.text_type(width),
+                height=six.text_type(height),
+                fill=theme.background_color,
+            )
+        )
 
         root.append(root_group)
 
         # Charts
-        grid_group = ET.Element('g')
+        grid_group = ET.Element("g")
 
         chart_count = len(self._charts)
         grid_width = math.ceil(math.sqrt(chart_count))
@@ -83,8 +88,8 @@ class Grid(object):
             x = (i % grid_width) * chart_width
             y = math.floor(i / grid_width) * chart_height
 
-            group = ET.Element('g')
-            group.set('transform', svg.translate(x, y))
+            group = ET.Element("g")
+            group.set("transform", svg.translate(x, y))
 
             chart = chart.to_svg_group(chart_width, chart_height)
             group.append(chart)
@@ -100,7 +105,7 @@ class Grid(object):
             f = None
 
             try:
-                if hasattr(path, 'write'):
+                if hasattr(path, "write"):
                     f = path
                     close = False
                 else:
@@ -109,7 +114,7 @@ class Grid(object):
                     if dirpath and not os.path.exists(dirpath):
                         os.makedirs(dirpath)
 
-                    f = open(path, 'w')
+                    f = open(path, "w")
 
                 f.write(svg.HEADER)
                 f.write(svg_text)

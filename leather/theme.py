@@ -14,7 +14,7 @@ default_chart_width = 800
 default_chart_height = 600
 
 #: Chart background color
-background_color = '#f9f9f9'
+background_color = "#f9f9f9"
 
 #: Chart margin as a percent of chart width
 margin = 0.05
@@ -22,10 +22,10 @@ margin = 0.05
 # CHART TITLE
 
 #: Chart title text color
-title_color = '#333'
+title_color = "#333"
 
 #: Chart title font
-title_font_family = 'Monaco'
+title_font_family = "Monaco"
 
 #: Chart title font size
 title_font_size = 16
@@ -42,10 +42,10 @@ title_gap = 4
 # LEGEND
 
 #: Chart legend text color
-legend_color = '#666'
+legend_color = "#666"
 
 #: Chart legend font
-legend_font_family = 'Monaco'
+legend_font_family = "Monaco"
 
 #: Chart legend font size
 legend_font_size = 14
@@ -68,10 +68,10 @@ legend_bubble_offset = 4
 # AXIS
 
 #: Axis title text color
-axis_title_color = '#666'
+axis_title_color = "#666"
 
 #: Axis title font
-axis_title_font_family = 'Monaco'
+axis_title_font_family = "Monaco"
 
 #: Axis title font size
 axis_title_font_size = 14
@@ -94,18 +94,18 @@ tick_width = 1
 tick_size = 4
 
 #: Color of tick marks
-tick_color = '#eee'
+tick_color = "#eee"
 
 #: Color of the zero tick mark
-zero_color = '#a8a8a8'
+zero_color = "#a8a8a8"
 
 # TICK LABELS
 
 #: Color of tick label text
-label_color = '#9c9c9c'
+label_color = "#9c9c9c"
 
 #: Tick label font
-tick_font_family = 'Monaco'
+tick_font_family = "Monaco"
 
 #: Tick label font size
 tick_font_size = 14
@@ -119,7 +119,7 @@ tick_font_char_width = 8
 # SERIES
 
 #: Default sequence of :class:`.Shape` colors
-default_series_colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+default_series_colors = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00"]
 
 #: Default :class:`.Dots` radius
 default_dot_radius = 3
@@ -128,5 +128,5 @@ default_dot_radius = 3
 default_line_width = 2
 
 #: Default stroke-dasharray property when using dashes on a line
-STROKE_DASHARRAY_NONE = 'none'
+STROKE_DASHARRAY_NONE = "none"
 default_stroke_dasharray = STROKE_DASHARRAY_NONE
