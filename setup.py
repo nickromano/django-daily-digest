@@ -65,8 +65,8 @@ setup(
     license="MIT",
     package_data={"daily_digest": ["templates/daily_digest/*.html"]},
     install_requires=[
-        "Django>=1.8",
-        "CairoSVG>=2.0.3",
+        "Django>=2.0",
+        "CairoSVG>=2.3.0",
         "premailer",
     ],
     # Dependency links are no longer supported by pip so the leather code has been copied to this repo
