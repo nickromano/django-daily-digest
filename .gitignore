@@ -11,3 +11,6 @@ __pycache__/
 /.coverage
 /build
 .DS_Store
+
+.state-*
+
