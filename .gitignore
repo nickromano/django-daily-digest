@@ -2,6 +2,8 @@
 __pycache__/
 
 .subl/
+.venv/
+.vscode/
 
 *.sqlite3
 
