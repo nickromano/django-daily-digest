@@ -66,7 +66,7 @@ else:
 
         Via: https://github.com/PythonCHB/close_pep/blob/master/isclose.py
 
-        Verified against final CPython 3.5 implemenation.
+        Verified against final CPython 3.5 implementation.
 
         :param a:
             The first number to check.
