@@ -1,7 +1,7 @@
 Django==4.2
 -e git+https://github.com/nickromano/leather.git#egg=leather
 CairoSVG==2.7.0
-mock==5.0.1
+mock==5.0.2
 premailer==3.10.0
 black==23.3.0
 flake8==6.0.0
