@@ -1,4 +1,4 @@
-Django==4.2.3
+Django==4.2.5
 -e git+https://github.com/nickromano/leather.git#egg=leather
 CairoSVG==2.7.1
 mock==5.1.0
