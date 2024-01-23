@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-
 import xml.etree.ElementTree as ET
-
-import six
 
 from leather.data_types import Number, Text
 from leather.series import CategorySeries
@@ -71,10 +67,10 @@ class Columns(Shape):
             group.append(
                 ET.Element(
                     "rect",
-                    x=six.text_type(x1),
-                    y=six.text_type(column_y),
-                    width=six.text_type(x2 - x1),
-                    height=six.text_type(column_height),
+                    x=str(x1),
+                    y=str(column_y),
+                    width=str(x2 - x1),
+                    height=str(column_height),
                     fill=color,
                 )
             )

@@ -1,12 +1,8 @@
-#!/usr/bin/env python
-
 """
 Helpers for working with SVG.
 """
 
 import xml.etree.ElementTree as ET
-
-import six
 
 HEADER = (
     '<?xml version="1.0" standalone="no"?>\n'
@@ -19,10 +15,7 @@ def stringify(root):
     """
     Convert an SVG XML tree to a unicode string.
     """
-    if six.PY3:
-        return ET.tostring(root, encoding="unicode")
-    else:
-        return ET.tostring(root, encoding="utf-8")
+    return ET.tostring(root, encoding="unicode")
 
 
 def save(f, root):

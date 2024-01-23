@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 This module contains all style configuration for rendering charts. Setting any
 of these variables will change how charts are rendered.
@@ -128,5 +126,4 @@ default_dot_radius = 3
 default_line_width = 2
 
 #: Default stroke-dasharray property when using dashes on a line
-STROKE_DASHARRAY_NONE = "none"
-default_stroke_dasharray = STROKE_DASHARRAY_NONE
+default_stroke_dasharray = "none"

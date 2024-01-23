@@ -69,10 +69,11 @@ setup(
         "CairoSVG>=2.3.0",
         "premailer",
     ],
+    # Pip publishing is currently broken for leather and
     # Dependency links are no longer supported by pip so the leather code has been copied to this repo
     # until this PR is merged: https://github.com/wireservice/leather/pull/89.
     # dependency_links=[
-    #     'git+ssh://git@github.com/nickromano/leather.git#egg=leather-0.3.3',
+    #     'git+ssh://git@github.com/wireservice/leather.git@0e2421471718e407a3e252537185d216f5c603a3#egg=leather-0.4.0',
     # ],
     classifiers=[
         "Framework :: Django",
