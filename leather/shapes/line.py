@@ -17,6 +17,7 @@ class Line(Shape):
     :param width:
         The width of the lines. Defaults to :data:`.theme.default_line_width`.
     """
+
     def __init__(self, stroke_color=None, width=None, stroke_dasharray=None):
         self._stroke_color = stroke_color
         self._width = width or theme.default_line_width
@@ -27,23 +28,19 @@ class Line(Shape):
         Verify this shape can be used to render a given series.
         """
         if isinstance(series, CategorySeries):
-            raise ValueError('Line can not be used to render CategorySeries.')
+            raise ValueError("Line can not be used to render CategorySeries.")
 
         if series.data_type(X) is Text or series.data_type(Y) is Text:
-            raise ValueError('Line does not support Text values.')
+            raise ValueError("Line does not support Text values.")
 
     def _new_path(self, stroke_color):
         """
         Start a new path.
         """
-        path = ET.Element(
-            'path',
-            stroke=stroke_color,
-            fill='none'
-        )
-        path.set('stroke-width', str(self._width))
-        if self._stroke_dasharray != 'none':
-            path.set('stroke-dasharray', self._stroke_dasharray)
+        path = ET.Element("path", stroke=stroke_color, fill="none")
+        path.set("stroke-width", str(self._width))
+        if self._stroke_dasharray != "none":
+            path.set("stroke-dasharray", self._stroke_dasharray)
 
         return path
 
@@ -51,8 +48,8 @@ class Line(Shape):
         """
         Render lines to SVG elements.
         """
-        group = ET.Element('g')
-        group.set('class', 'series lines')
+        group = ET.Element("g")
+        group.set("class", "series lines")
 
         if self._stroke_color:
             stroke_color = self._stroke_color
@@ -65,7 +62,7 @@ class Line(Shape):
         for d in series.data():
             if d.x is None or d.y is None:
                 if path_d:
-                    path.set('d', ' '.join(path_d))
+                    path.set("d", " ".join(path_d))
                     group.append(path)
 
                 path_d = []
@@ -77,18 +74,14 @@ class Line(Shape):
             proj_y = y_scale.project(d.y, height, 0)
 
             if not path_d:
-                command = 'M'
+                command = "M"
             else:
-                command = 'L'
+                command = "L"
 
-            path_d.extend([
-                command,
-                str(proj_x),
-                str(proj_y)
-            ])
+            path_d.extend([command, str(proj_x), str(proj_y)])
 
         if path_d:
-            path.set('d', ' '.join(path_d))
+            path.set("d", " ".join(path_d))
             group.append(path)
 
         return group

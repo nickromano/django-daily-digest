@@ -14,6 +14,7 @@ class Axis:
     :param tick_formatter:
         An optional :func:`.tick_format_function`.
     """
+
     def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks
         self._tick_formatter = tick_formatter
@@ -39,9 +40,9 @@ class Axis:
         """
         margin = 0
 
-        if orient == 'left':
+        if orient == "left":
             margin += self._estimate_left_tick_width(scale) + (theme.tick_size * 2)
-        elif orient == 'bottom':
+        elif orient == "bottom":
             margin += theme.tick_font_char_height + (theme.tick_size * 2)
 
         if self._name:
@@ -53,45 +54,52 @@ class Axis:
         """
         Render this axis to SVG elements.
         """
-        group = ET.Element('g')
-        group.set('class', 'axis ' + orient)
+        group = ET.Element("g")
+        group.set("class", "axis " + orient)
 
         # Axis title
         if self._name is not None:
-            if orient == 'left':
-                title_x = -(self._estimate_left_tick_width(scale) + theme.axis_title_gap)
+            if orient == "left":
+                title_x = -(
+                    self._estimate_left_tick_width(scale) + theme.axis_title_gap
+                )
                 title_y = height / 2
-                dy = ''
+                dy = ""
                 transform = svg.rotate(270, title_x, title_y)
-            elif orient == 'bottom':
+            elif orient == "bottom":
                 title_x = width / 2
-                title_y = height + theme.tick_font_char_height + (theme.tick_size * 2) + theme.axis_title_gap
-                dy = '1em'
-                transform = ''
+                title_y = (
+                    height
+                    + theme.tick_font_char_height
+                    + (theme.tick_size * 2)
+                    + theme.axis_title_gap
+                )
+                dy = "1em"
+                transform = ""
 
             title = ET.Element(
-                'text',
+                "text",
                 x=str(title_x),
                 y=str(title_y),
                 dy=dy,
                 fill=theme.axis_title_color,
-                transform=transform
+                transform=transform,
             )
-            title.set('text-anchor', 'middle')
-            title.set('font-family', theme.axis_title_font_family)
-            title.set('font-size', str(theme.axis_title_font_size))
+            title.set("text-anchor", "middle")
+            title.set("font-family", theme.axis_title_font_family)
+            title.set("font-size", str(theme.axis_title_font_size))
             title.text = self._name
 
             group.append(title)
 
         # Ticks
-        if orient == 'left':
+        if orient == "left":
             label_x = -(theme.tick_size * 2)
             x1 = -theme.tick_size
             x2 = width
             range_min = height
             range_max = 0
-        elif orient == 'bottom':
+        elif orient == "bottom":
             label_y = height + (theme.tick_size * 2)
             y1 = 0
             y2 = height + theme.tick_size
@@ -106,8 +114,8 @@ class Axis:
 
         for i, value in enumerate(tick_values):
             # Tick group
-            tick_group = ET.Element('g')
-            tick_group.set('class', 'tick')
+            tick_group = ET.Element("g")
+            tick_group.set("class", "tick")
 
             if value == 0:
                 zero_tick_group = tick_group
@@ -122,48 +130,44 @@ class Axis:
             else:
                 tick_color = theme.tick_color
 
-            if orient == 'left':
+            if orient == "left":
                 y1 = projected_value
                 y2 = projected_value
 
-            elif orient == 'bottom':
+            elif orient == "bottom":
                 x1 = projected_value
                 x2 = projected_value
 
             tick = ET.Element(
-                'line',
+                "line",
                 x1=str(x1),
                 y1=str(y1),
                 x2=str(x2),
                 y2=str(y2),
-                stroke=tick_color
+                stroke=tick_color,
             )
-            tick.set('stroke-width', str(theme.tick_width))
+            tick.set("stroke-width", str(theme.tick_width))
 
             tick_group.append(tick)
 
             # Tick label
-            if orient == 'left':
+            if orient == "left":
                 x = label_x
                 y = projected_value
-                dy = '0.32em'
-                text_anchor = 'end'
-            elif orient == 'bottom':
+                dy = "0.32em"
+                text_anchor = "end"
+            elif orient == "bottom":
                 x = projected_value
                 y = label_y
-                dy = '1em'
-                text_anchor = 'middle'
+                dy = "1em"
+                text_anchor = "middle"
 
             label = ET.Element(
-                'text',
-                x=str(x),
-                y=str(y),
-                dy=dy,
-                fill=theme.label_color
+                "text", x=str(x), y=str(y), dy=dy, fill=theme.label_color
             )
-            label.set('text-anchor', text_anchor)
-            label.set('font-family', theme.tick_font_family)
-            label.set('font-size', str(theme.tick_font_size))
+            label.set("text-anchor", text_anchor)
+            label.set("font-family", theme.tick_font_family)
+            label.set("font-size", str(theme.tick_font_size))
 
             value = tick_formatter(value, i, tick_count)
             label.text = str(value)

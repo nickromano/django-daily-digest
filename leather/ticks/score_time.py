@@ -19,13 +19,13 @@ MIN_UNITS = 4
 
 #: The possible intervals as (to_function, from_function, overlap_tick_formatter, simple_tick_formatter)
 INTERVALS = [
-    (utils.to_year_count, utils.from_year_count, None, '%Y'),
-    (utils.to_month_count, utils.from_month_count, '%Y-%m', '%m'),
-    (utils.to_day_count, utils.from_day_count, '%m-%d', '%d'),
-    (utils.to_hour_count, utils.from_hour_count, '%d-%H', '%H'),
-    (utils.to_minute_count, utils.from_minute_count, '%H:%M', '%M'),
-    (utils.to_second_count, utils.from_second_count, '%H:%M:%S', '%S'),
-    (utils.to_microsecond_count, utils.from_microsecond_count, '%S-%f', '%f'),
+    (utils.to_year_count, utils.from_year_count, None, "%Y"),
+    (utils.to_month_count, utils.from_month_count, "%Y-%m", "%m"),
+    (utils.to_day_count, utils.from_day_count, "%m-%d", "%d"),
+    (utils.to_hour_count, utils.from_hour_count, "%d-%H", "%H"),
+    (utils.to_minute_count, utils.from_minute_count, "%H:%M", "%M"),
+    (utils.to_second_count, utils.from_second_count, "%H:%M:%S", "%S"),
+    (utils.to_microsecond_count, utils.from_microsecond_count, "%S-%f", "%f"),
 ]
 
 
@@ -39,6 +39,7 @@ class ScoreTimeTicker(ScoreTicker):
     :param domain_max:
         Maximum value of the data series.
     """
+
     def __init__(self, domain_min, domain_max):
         self._domain_min = domain_min
         self._domain_max = domain_max
@@ -118,15 +119,19 @@ class ScoreTimeTicker(ScoreTicker):
             if len(ticks) < MIN_TICK_COUNT or len(ticks) > MAX_TICK_COUNT:
                 continue
 
-            candidate_ticks.append({
-                'interval': interval,
-                'ticks': ticks,
-                'score': self._score(interval, ticks)
-            })
+            candidate_ticks.append(
+                {
+                    "interval": interval,
+                    "ticks": ticks,
+                    "score": self._score(interval, ticks),
+                }
+            )
 
         # Order by best score, using number of ticks as a tie-breaker
-        best = sorted(candidate_ticks, key=lambda c: (c['score']['total'], len(c['ticks'])))
-        ticks = best[0]['ticks']
+        best = sorted(
+            candidate_ticks, key=lambda c: (c["score"]["total"], len(c["ticks"]))
+        )
+        ticks = best[0]["ticks"]
 
         return [self._from_unit(t) for t in ticks]
 
@@ -135,24 +140,19 @@ class ScoreTimeTicker(ScoreTicker):
         Score a given tick sequence based on several criteria. This method returns
         discrete scoring components for easier debugging.
         """
-        s = {
-            'pct_waste': 0,
-            'interval_penalty': 0,
-            'len_penalty': 0,
-            'total': 0
-        }
+        s = {"pct_waste": 0, "interval_penalty": 0, "len_penalty": 0, "total": 0}
 
         # Penalty for wasted scale space
         waste = (self._unit_min - ticks[0]) + (ticks[-1] - self._unit_max)
         pct_waste = waste / (self._unit_max - self._unit_min)
 
-        s['pct_waste'] = pow(10, pct_waste)
+        s["pct_waste"] = pow(10, pct_waste)
 
         # Penalty for too many ticks
         if len(ticks) > 5:
-            s['len_penalty'] = (len(ticks) - 5)
+            s["len_penalty"] = len(ticks) - 5
 
-        s['total'] = s['pct_waste'] + s['interval_penalty'] + s['len_penalty']
+        s["total"] = s["pct_waste"] + s["interval_penalty"] + s["len_penalty"]
 
         return s
 

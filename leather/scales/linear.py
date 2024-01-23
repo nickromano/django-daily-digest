@@ -13,9 +13,10 @@ class Linear(Scale):
     :param domain_max:
         The maximum value of the input domain.
     """
+
     def __init__(self, domain_min, domain_max):
         if domain_min > domain_max:
-            raise ValueError('Inverted domains are not currently supported.')
+            raise ValueError("Inverted domains are not currently supported.")
         elif domain_min == domain_max:
             # Default to unit scale
             self._data_min = Decimal(0)

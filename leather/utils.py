@@ -6,13 +6,14 @@ try:
     __IPYTHON__
     from IPython.display import SVG as IPythonSVG
 except (NameError, ImportError):
+
     def IPythonSVG(x):
         return x
 
 
 # Shorthand
-ZERO = Decimal('0')
-NINE_PLACES = Decimal('1e-9')
+ZERO = Decimal("0")
+NINE_PLACES = Decimal("1e-9")
 
 #: X data dimension index
 X = 0
@@ -24,16 +25,16 @@ Y = 1
 Z = 2
 
 
-DIMENSION_NAMES = ['X', 'Y', 'Z']
+DIMENSION_NAMES = ["X", "Y", "Z"]
 
 #: Data structure for representing margins or other CSS-edge like properties
-Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
+Box = namedtuple("Box", ["top", "right", "bottom", "left"])
 
 #: Data structure for a single series data point
-Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
+Datum = namedtuple("Datum", ["i", "x", "y", "z", "row"])
 
 #: Dummy object used in place of a series when rendering legends for categories
-DummySeries = namedtuple('DummySeries', ['name'])
+DummySeries = namedtuple("DummySeries", ["name"])
 
 
 def to_year_count(d):

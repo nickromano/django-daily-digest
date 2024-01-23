@@ -12,6 +12,7 @@ class Grid:
     A container for a set of :class:`.Chart` instances that are rendered in a
     grid layout.
     """
+
     def __init__(self):
         self._charts = []
 
@@ -47,29 +48,31 @@ class Grid:
             height = rows * theme.default_chart_height
 
         root = ET.Element(
-            'svg',
+            "svg",
             width=str(width),
             height=str(height),
-            version='1.1',
-            xmlns='http://www.w3.org/2000/svg'
+            version="1.1",
+            xmlns="http://www.w3.org/2000/svg",
         )
 
         # Root /  background
-        root_group = ET.Element('g')
+        root_group = ET.Element("g")
 
-        root_group.append(ET.Element(
-            'rect',
-            x=str(0),
-            y=str(0),
-            width=str(width),
-            height=str(height),
-            fill=theme.background_color
-        ))
+        root_group.append(
+            ET.Element(
+                "rect",
+                x=str(0),
+                y=str(0),
+                width=str(width),
+                height=str(height),
+                fill=theme.background_color,
+            )
+        )
 
         root.append(root_group)
 
         # Charts
-        grid_group = ET.Element('g')
+        grid_group = ET.Element("g")
 
         chart_count = len(self._charts)
         grid_width = math.ceil(math.sqrt(chart_count))
@@ -81,8 +84,8 @@ class Grid:
             x = (i % grid_width) * chart_width
             y = math.floor(i / grid_width) * chart_height
 
-            group = ET.Element('g')
-            group.set('transform', svg.translate(x, y))
+            group = ET.Element("g")
+            group.set("transform", svg.translate(x, y))
 
             chart = chart.to_svg_group(chart_width, chart_height)
             group.append(chart)
@@ -98,7 +101,7 @@ class Grid:
             f = None
 
             try:
-                if hasattr(path, 'write'):
+                if hasattr(path, "write"):
                     f = path
                     close = False
                 else:
@@ -107,7 +110,7 @@ class Grid:
                     if dirpath and not os.path.exists(dirpath):
                         os.makedirs(dirpath)
 
-                    f = open(path, 'w')
+                    f = open(path, "w")
 
                 f.write(svg.HEADER)
                 f.write(svg_text)

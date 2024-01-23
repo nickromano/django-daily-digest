@@ -34,19 +34,17 @@ class Series:
         An optional name to be used in labeling this series. This will be
         used as the chart title if rendered in a :class:`.Lattice`.
     """
+
     def __init__(self, data, x=None, y=None, name=None):
         self._data = data
         self._name = name
 
         self._keys = [
             self._make_key(x if x is not None else X),
-            self._make_key(y if y is not None else Y)
+            self._make_key(y if y is not None else Y),
         ]
 
-        self._types = [
-            self._infer_type(X),
-            self._infer_type(Y)
-        ]
+        self._types = [self._infer_type(X), self._infer_type(Y)]
 
     def _make_key(self, key):
         """
@@ -69,7 +67,9 @@ class Series:
                 break
 
         if v is None:
-            raise ValueError('All values in %s dimension are null.' % DIMENSION_NAMES[dimension])
+            raise ValueError(
+                "All values in %s dimension are null." % DIMENSION_NAMES[dimension]
+            )
 
         return DataType.infer(v)
 

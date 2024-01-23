@@ -11,11 +11,12 @@ class Temporal(Scale):
     :param domain_max:
         The maximum date/datetime of the input domain.
     """
+
     def __init__(self, domain_min, domain_max):
         if domain_min >= domain_max:
             raise ValueError(
-                'Domain minimum must be less than domain maximum. '
-                'Inverted domains are not currently supported.'
+                "Domain minimum must be less than domain maximum. "
+                "Inverted domains are not currently supported."
             )
 
         self._data_min = domain_min

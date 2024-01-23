@@ -7,6 +7,7 @@ class Ordinal(Scale):
     """
     A scale that maps individual values (e.g. strings) to a range.
     """
+
     def __init__(self, domain):
         self._domain = domain
 
@@ -28,9 +29,15 @@ class Ordinal(Scale):
         segment_size = (range_max - range_min) / segments
 
         try:
-            pos = range_min + (self._domain.index(value) * segment_size) + (segment_size / 2)
+            pos = (
+                range_min
+                + (self._domain.index(value) * segment_size)
+                + (segment_size / 2)
+            )
         except ValueError:
-            raise ValueError('Value "%s" is not present in Ordinal scale domain' % value)
+            raise ValueError(
+                'Value "%s" is not present in Ordinal scale domain' % value
+            )
 
         return pos
 
@@ -50,7 +57,9 @@ class Ordinal(Scale):
             a = range_min + (self._domain.index(value) * segment_size) + gap
             b = range_min + ((self._domain.index(value) + 1) * segment_size) - gap
         except ValueError:
-            raise ValueError('Value "%s" is not present in Ordinal scale domain' % value)
+            raise ValueError(
+                'Value "%s" is not present in Ordinal scale domain' % value
+            )
 
         return (a, b)
 

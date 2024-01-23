@@ -18,6 +18,7 @@ class Lattice:
         An instance of :class:`.Shape` to use to render all series. Defaults
         to :class:`.Line` if not specified.
     """
+
     def __init__(self, shape=None):
         self._shape = shape or Line()
         self._series = []
@@ -112,7 +113,7 @@ class Lattice:
         for dimension in [X, Y]:
             if self._types[dimension]:
                 if series._types[dimension] is not self._types[dimension]:
-                    raise TypeError('All data series must have the same data types.')
+                    raise TypeError("All data series must have the same data types.")
             else:
                 self._types[dimension] = series._types[dimension]
 
