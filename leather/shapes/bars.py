@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-
 import xml.etree.ElementTree as ET
-
-import six
 
 from leather.data_types import Number, Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather import theme
 from leather.utils import X, Y
 
 
@@ -19,7 +14,6 @@ class Bars(Shape):
         The color to fill the bars. You may also specify a
         :func:`.style_function`.
     """
-
     def __init__(self, fill_color=None):
         self._fill_color = fill_color
 
@@ -28,20 +22,20 @@ class Bars(Shape):
         Verify this shape can be used to render a given series.
         """
         if isinstance(series, CategorySeries):
-            raise ValueError("Bars can not be used to render CategorySeries.")
+            raise ValueError('Bars can not be used to render CategorySeries.')
 
         if series.data_type(X) is not Number:
-            raise ValueError("Bars only support Number values for the Y axis.")
+            raise ValueError('Bars only support Number values for the Y axis.')
 
         if series.data_type(Y) is not Text:
-            raise ValueError("Bars only support Text values for the X axis.")
+            raise ValueError('Bars only support Text values for the X axis.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """
         Render bars to SVG elements.
         """
-        group = ET.Element("g")
-        group.set("class", "series bars")
+        group = ET.Element('g')
+        group.set('class', 'series bars')
 
         zero_x = x_scale.project(0, 0, width)
 
@@ -69,15 +63,13 @@ class Bars(Shape):
             else:
                 color = fill_color
 
-            group.append(
-                ET.Element(
-                    "rect",
-                    x=six.text_type(bar_x),
-                    y=six.text_type(y2),
-                    width=six.text_type(bar_width),
-                    height=six.text_type(y1 - y2),
-                    fill=color,
-                )
-            )
+            group.append(ET.Element(
+                'rect',
+                x=str(bar_x),
+                y=str(y2),
+                width=str(bar_width),
+                height=str(y1 - y2),
+                fill=color
+            ))
 
         return group

@@ -1,17 +1,14 @@
-#!/usr/bin/env python
-
 from leather.axis import Axis
 from leather.chart import Chart
 from leather.data_types import Date, DateTime
 from leather.grid import Grid
-from leather.scales import Scale, Linear
+from leather.scales import Linear, Scale, Temporal
 from leather.series import Series
 from leather.shapes import Line
-from leather import theme
 from leather.utils import X, Y
 
 
-class Lattice(object):
+class Lattice:
     """
     A grid of charts with synchronized shapes, scales, and axes.
 
@@ -21,7 +18,6 @@ class Lattice(object):
         An instance of :class:`.Shape` to use to render all series. Defaults
         to :class:`.Line` if not specified.
     """
-
     def __init__(self, shape=None):
         self._shape = shape or Line()
         self._series = []
@@ -116,7 +112,7 @@ class Lattice(object):
         for dimension in [X, Y]:
             if self._types[dimension]:
                 if series._types[dimension] is not self._types[dimension]:
-                    raise TypeError("All data series must have the same data types.")
+                    raise TypeError('All data series must have the same data types.')
             else:
                 self._types[dimension] = series._types[dimension]
 

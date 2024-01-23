@@ -1,18 +1,8 @@
-#!/usr/bin/env python
-
-try:
-    from collections.abc import Iterable, Sequence, Mapping
-except ImportError:
-    from collections import Iterable, Sequence, Mapping
-from functools import partial
-
-import six
-
 from leather.data_types import DataType
-from leather.utils import DIMENSION_NAMES, X, Y, Datum
+from leather.utils import DIMENSION_NAMES, Datum, X, Y
 
 
-class Series(object):
+class Series:
     """
     A series of data and its associated metadata.
 
@@ -44,17 +34,19 @@ class Series(object):
         An optional name to be used in labeling this series. This will be
         used as the chart title if rendered in a :class:`.Lattice`.
     """
-
     def __init__(self, data, x=None, y=None, name=None):
         self._data = data
         self._name = name
 
         self._keys = [
             self._make_key(x if x is not None else X),
-            self._make_key(y if y is not None else Y),
+            self._make_key(y if y is not None else Y)
         ]
 
-        self._types = [self._infer_type(X), self._infer_type(Y)]
+        self._types = [
+            self._infer_type(X),
+            self._infer_type(Y)
+        ]
 
     def _make_key(self, key):
         """
@@ -62,8 +54,7 @@ class Series(object):
         """
         if callable(key):
             return key
-        else:
-            return lambda row, index: row[key]
+        return lambda row, index: row[key]
 
     def _infer_type(self, dimension):
         """
@@ -78,9 +69,7 @@ class Series(object):
                 break
 
         if v is None:
-            raise ValueError(
-                "All values in %s dimension are null." % DIMENSION_NAMES[dimension]
-            )
+            raise ValueError('All values in %s dimension are null.' % DIMENSION_NAMES[dimension])
 
         return DataType.infer(v)
 

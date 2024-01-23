@@ -1,14 +1,10 @@
-#!/usr/bin/env python
-
-from collections import defaultdict
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 
-import six
-
+from leather import theme
 from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather import theme
 from leather.utils import DummySeries, X, Y
 
 
@@ -25,7 +21,6 @@ class Dots(Shape):
         :data:`.theme.default_dot_radius`. You may also specify a
         :func:`.style_function`.
     """
-
     def __init__(self, fill_color=None, radius=None):
         self._fill_color = fill_color
         self._radius = radius or theme.default_dot_radius
@@ -35,7 +30,7 @@ class Dots(Shape):
         Verify this shape can be used to render a given series.
         """
         if series.data_type(X) is Text or series.data_type(Y) is Text:
-            raise ValueError("Dots do not support Text values.")
+            raise ValueError('Dots do not support Text values.')
 
         return True
 
@@ -43,8 +38,8 @@ class Dots(Shape):
         """
         Render dots to SVG elements.
         """
-        group = ET.Element("g")
-        group.set("class", "series dots")
+        group = ET.Element('g')
+        group.set('class', 'series dots')
 
         default_colors = defaultdict(lambda: next(palette))
 
@@ -67,15 +62,13 @@ class Dots(Shape):
             else:
                 radius = self._radius
 
-            group.append(
-                ET.Element(
-                    "circle",
-                    cx=six.text_type(proj_x),
-                    cy=six.text_type(proj_y),
-                    r=six.text_type(radius),
-                    fill=fill_color,
-                )
-            )
+            group.append(ET.Element(
+                'circle',
+                cx=str(proj_x),
+                cy=str(proj_y),
+                r=str(radius),
+                fill=fill_color
+            ))
 
         return group
 

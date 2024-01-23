@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-
 import xml.etree.ElementTree as ET
-
-import six
 
 from leather.data_types import Number, Text
 from leather.series import CategorySeries
@@ -18,7 +14,6 @@ class Columns(Shape):
         The color to fill the columns. You may also specify a
         :func:`.style_function`.
     """
-
     def __init__(self, fill_color=None):
         self._fill_color = fill_color
 
@@ -27,20 +22,20 @@ class Columns(Shape):
         Verify this shape can be used to render a given series.
         """
         if isinstance(series, CategorySeries):
-            raise ValueError("Columns can not be used to render CategorySeries.")
+            raise ValueError('Columns can not be used to render CategorySeries.')
 
         if series.data_type(X) is not Text:
-            raise ValueError("Bars only support Text values for the X axis.")
+            raise ValueError('Bars only support Text values for the X axis.')
 
         if series.data_type(Y) is not Number:
-            raise ValueError("Bars only support Number values for the Y axis.")
+            raise ValueError('Bars only support Number values for the Y axis.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """
         Render columns to SVG elements.
         """
-        group = ET.Element("g")
-        group.set("class", "series columns")
+        group = ET.Element('g')
+        group.set('class', 'series columns')
 
         zero_y = y_scale.project(0, height, 0)
 
@@ -68,15 +63,13 @@ class Columns(Shape):
             else:
                 color = fill_color
 
-            group.append(
-                ET.Element(
-                    "rect",
-                    x=six.text_type(x1),
-                    y=six.text_type(column_y),
-                    width=six.text_type(x2 - x1),
-                    height=six.text_type(column_height),
-                    fill=color,
-                )
-            )
+            group.append(ET.Element(
+                'rect',
+                x=str(x1),
+                y=str(column_y),
+                width=str(x2 - x1),
+                height=str(column_height),
+                fill=color
+            ))
 
         return group
