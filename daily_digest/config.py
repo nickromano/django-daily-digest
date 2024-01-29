@@ -68,9 +68,9 @@ def load_config():
         title=_config.get("title", "Daily Digest"),
         from_email=_config.get("from_email", settings.DEFAULT_FROM_EMAIL),
         to=_config.get("to", settings.ADMINS),
-        timezone=pytz.timezone(_config["timezone"])
-        if _config.get("timezone")
-        else pytz.UTC,
+        timezone=(
+            pytz.timezone(_config["timezone"]) if _config.get("timezone") else pytz.UTC
+        ),
         exclude_today=_config.get("exclude_today", False),
         chart_configs=_chart_configs,
     )
