@@ -3,6 +3,6 @@ Django==5.0.6
 CairoSVG==2.7.1
 mock==5.1.0
 premailer==3.10.0
-black==24.4.2
+black==24.8.0
 flake8==7.0.0
 pytz==2024.1
