@@ -5,4 +5,4 @@ mock==5.1.0
 premailer==3.10.0
 black==25.1.0
 flake8==7.1.1
-pytz==2024.2
+pytz==2025.1
