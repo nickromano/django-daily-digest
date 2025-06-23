@@ -4,5 +4,5 @@ CairoSVG==2.8.2
 mock==5.2.0
 premailer==3.10.0
 black==25.1.0
-flake8==7.2.0
+flake8==7.3.0
 pytz==2025.2
