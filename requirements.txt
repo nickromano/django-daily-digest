@@ -1,5 +1,5 @@
 Django
--e git+https://github.com/wireservice/leather.git@0e2421471718e407a3e252537185d216f5c603a3#egg=leather
+leather
 CairoSVG
 mock
 premailer
